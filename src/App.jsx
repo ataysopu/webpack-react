@@ -10,6 +10,7 @@ export const App = () => {
             );
             setProducts(result.data)
         };
+        console.log('aaa')
         fetchData();
     }, [])
 
