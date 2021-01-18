@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductTable from "../organisms/ProductTable.jsx";
+import {ProductTable} from "../organisms/ProductTable.jsx";
 import {SearchBar} from "../organisms/SearchBar.jsx";
 import {CreateProductForm} from "../organisms/CreateProductForm.jsx";
 import styled from "styled-components";
@@ -30,9 +30,10 @@ export const FilterableProductTable = () => {
                 stocked={stocked}
                 filterProducts={filterProducts}
             />
-            <ProductTable
+            <StyledProductTable
                 filterText={filterText}
                 stocked={stocked}
+                theme={theme}
             />
             {isCreatePopupShown && <CreateProductForm handleClosePopup={handleToggleCreatePopup}/>}
         </>
@@ -44,4 +45,11 @@ const StyledButton = styled.button`
   margin-bottom: 10px;
   background: ${({theme}) => theme.background};
   color: ${({theme}) => theme.foreground};
+`
+
+const StyledProductTable = styled(ProductTable)`
+  & td {
+      background: ${({theme}) => theme.background};
+      color: ${({theme}) => theme.foreground};
+  }
 `

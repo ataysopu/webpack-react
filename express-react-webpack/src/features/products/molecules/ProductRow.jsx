@@ -1,20 +1,19 @@
 import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {productsActions} from "../reducer";
 import {UpdateProductForm} from "./UpdateProductForm.jsx";
+import {useProductsQuery} from "../queries/useProductsQuery";
 
 export const ProductRow = (props) => {
-    const dispatch = useDispatch()
     let history = useHistory();
     let [isEdited, setEdited] = useState(false)
+    const {deleteProduct} = useProductsQuery()
 
     let handleToggleEditPopup = () => {
         setEdited(!isEdited)
     };
 
     let handleDelete = () => {
-        dispatch(productsActions.delete.request({id: props.id}))
+        deleteProduct(props.id)
     };
 
     let goToProductPage = () => {

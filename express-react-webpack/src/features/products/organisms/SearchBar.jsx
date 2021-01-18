@@ -1,9 +1,7 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {productsActions} from "../reducer";
+import styled from "styled-components";
 
 export const SearchBar = props => {
-    const dispatch = useDispatch()
     let filterTextInput = React.useRef()
     let checkbox = React.useRef()
 
@@ -13,23 +11,33 @@ export const SearchBar = props => {
 
     return (
         <form>
-            <input
-                style={{marginTop: '10px'}}
-                type="text"
-                placeholder="Поиск товара"
-                ref={filterTextInput}
-                onChange={filterProducts}
-                value={props.filterText}
-            />
-            <div style={{marginTop: '10px', marginBottom: '10px'}}>
+            <InputWrapper>
+                <input
+                    type="text"
+                    placeholder="Поиск товара"
+                    ref={filterTextInput}
+                    onChange={filterProducts}
+                    value={props.filterText}
+                />
+            </InputWrapper>
+            <InputWrapper>
                 <input
                     type="checkbox"
                     ref={checkbox}
+                    id="stocked"
                     onChange={filterProducts}
                     checked={props.stocked}
                 />
-                {" "}Товары в наличии
-            </div>
+                <label htmlFor="stocked">Товары в наличии</label>
+            </InputWrapper>
         </form>
     )
 }
+
+const InputWrapper = styled.div`
+  margin-bottom: 10px;
+  margin-top: 10px;
+  & > input {
+    margin-right: 5px;
+  }
+`

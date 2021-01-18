@@ -1,28 +1,24 @@
 import React, {useEffect} from 'react';
 import {Link, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {productsActions} from "../reducer";
+import {useProductsQuery} from "../queries/useProductsQuery";
 
 export const ProductPage = () => {
-    const dispatch = useDispatch()
-    const {readProduct} = useSelector(state => {
-        return {
-            readProduct: state.productsStore.readProduct,
-        }
-    })
+    const {getProduct} = useProductsQuery()
+    const [product, setProduct] = React.useState({})
     const {productId} = useParams();
 
-    useEffect(() => {
-        dispatch(productsActions.read.request({productId}))
+    useEffect(async () => {
+        const readProduct = await getProduct(productId)
+        setProduct(readProduct)
     }, [productId])
 
     return (
         <>
             <Link to={'/'}>Вернуться к списку продуктов</Link>
-            <div>{readProduct?.name}</div>
-            <div>{readProduct.price && readProduct.price}</div>
-            <div>{readProduct.stocked ? 'В наличии' : 'Нет в наличии'}</div>
-            <div>{readProduct.category && readProduct.category}</div>
+            <div>{product?.name}</div>
+            <div>{product.price && product.price}</div>
+            <div>{product.stocked ? 'В наличии' : 'Нет в наличии'}</div>
+            <div>{product.category && product.category}</div>
         </>
     )
 }

@@ -1,19 +1,15 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {productsActions} from "../reducer";
 import {Formik} from 'formik';
 import * as Yup from "yup";
 import styled from "styled-components";
 import {useOnClickOutside} from "../../../utils/hooks";
+import {useProductsQuery} from "../queries/useProductsQuery";
 
 export const CreateProductForm = (props) => {
-    const dispatch = useDispatch()
     const ref = React.useRef();
-    const createProduct = async (values) => {
-        dispatch(productsActions.create.request({
-            title: values.productName,
-            price: values.productPrice
-        }))
+    const {create} = useProductsQuery()
+    const createProduct = (values) => {
+        create(values.productName, values.productPrice)
         props.handleClosePopup()
     }
 

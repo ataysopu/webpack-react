@@ -1,23 +1,18 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {productsActions} from "../reducer";
 import styled from 'styled-components'
 import {Formik} from 'formik';
 import {useOnClickOutside} from "../../../utils/hooks";
+import {useProductsQuery} from "../queries/useProductsQuery";
 
 
 export const UpdateProductForm = (props) => {
-    const dispatch = useDispatch()
     const ref = React.useRef();
+    const {update} = useProductsQuery()
 
     useOnClickOutside(ref, props.handleToggleEditPopup);
 
     let updateProduct = (values) => {
-        dispatch(productsActions.update.request({
-            id: props.id,
-            title: values.productName,
-            price: values.productPrice
-        }))
+        update(props.id, values.productName, values.productPrice)
         props.handleToggleEditPopup()
     };
 

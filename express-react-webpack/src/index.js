@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./App.jsx";
-import {Provider} from 'react-redux';
-import {store} from './store/configureStore';
-import rootSaga from "./sagas/rootSaga";
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
+import {QueryClient, QueryClientProvider} from 'react-query'
 
-store.runSaga(rootSaga)
+const queryClient = new QueryClient()
 
 const themes = {
     light: {
@@ -24,11 +22,11 @@ const themes = {
 export const ThemeContext = React.createContext(themes.light);
 
 ReactDOM.render(
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
         <Router>
             <ThemeContext.Provider value={themes.dark}>
                 <App/>
             </ThemeContext.Provider>
         </Router>
-    </Provider>,
+    </QueryClientProvider>,
     document.getElementById('app'));
